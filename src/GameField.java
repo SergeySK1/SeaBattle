@@ -22,11 +22,12 @@ public class GameField extends JPanel implements ActionListener, MouseMotionList
     static int countPressedGameField = 0;
     static ArrayList<Integer> listTypeShip;
     static Ship ship = new Ship();
-    int [] ships = ship.getAllShipElements();
+    int [] ships = ship.addTypeShips();
     static ArrayList<Point> p = new ArrayList<>();
     Point po = new Point();
     static ArrayList<Boolean> isVerticalList = new ArrayList<>();
     static boolean isVertical = false;
+    DrawField drawField;
 
 
     Timer t = new Timer(50,this);
@@ -37,6 +38,8 @@ public class GameField extends JPanel implements ActionListener, MouseMotionList
         listTypeShip = new ArrayList<>();
         addMouseListener(this);
         addMouseMotionListener(this);
+        drawField = new DrawField();
+
 
     }
 
@@ -44,15 +47,8 @@ public class GameField extends JPanel implements ActionListener, MouseMotionList
 
     public void paintComponent(Graphics g){
         super.paintComponent(g);
-        g.setColor(Color.BLUE);
-        g.fillRect(0,0,WIDTH+1,HEIGHT+1);
-        g.setColor(Color.YELLOW);
-        for (int i = 0; i <= WIDTH; i += ONESTEP){
-            g.drawLine(0, i, WIDTH, i);
-        }
-
-        for (int i = 0; i <= HEIGHT; i += ONESTEP){
-            g.drawLine(i,0,i,HEIGHT);
+        if (drawField != null){
+            drawField.drawGridFiled(g);
         }
         //если координаты были получены, отрисовываем корабль, по координате из листа
         if (p.size() > 0) {
@@ -78,6 +74,7 @@ public class GameField extends JPanel implements ActionListener, MouseMotionList
 
                             g.fillRect((indexToX / ONESTEP) * ONESTEP, (indexToY / ONESTEP) * ONESTEP,
                                     ONESTEP * listTypeShip.get(i), ONESTEP);
+                            System.out.print(listTypeShip.get(i));
                         }
                     }
                     else{
@@ -88,6 +85,7 @@ public class GameField extends JPanel implements ActionListener, MouseMotionList
                                     ONESTEP, ONESTEP * listTypeShip.get(i));
                         }
                     }
+
                 }
         }
 
@@ -117,9 +115,10 @@ public class GameField extends JPanel implements ActionListener, MouseMotionList
                 po.x = e.getX();
                 po.y = e.getY();
                 p.add(new Point(po));
-                System.out.println(countPressedGameField);
+            //    System.out.println(countPressedGameField);
                 listTypeShip.add(ships[countPressedGameField++]);
                 isVerticalList.add(isVertical);
+
             }
         }
     }
