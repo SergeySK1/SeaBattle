@@ -14,11 +14,9 @@ public class GameField extends JPanel implements ActionListener, MouseMotionList
     private static final int WIDTH = 301;
     private static final int HEIGHT = 301;
 
-
-
     private int countPressedGameField = 0;
     private ArrayList<Integer> listTypeShip = new ArrayList<>();;
-    private Ship ship = new Ship();;
+    private Ship ship = new Ship();
     private int [] ships = ship.addTypeShips();
     private ArrayList<Point> listPoints;
     private Point positionPoint;
@@ -26,6 +24,7 @@ public class GameField extends JPanel implements ActionListener, MouseMotionList
     private boolean isVertical;
     private  DrawField drawField;
     private Timer timerRepaint = new Timer(50,this);
+    Logic lo;
 
     public GameField(){
         addMouseListener(this);
@@ -74,7 +73,12 @@ public class GameField extends JPanel implements ActionListener, MouseMotionList
                 listPoints.add(new Point(positionPoint));
                 listTypeShip.add(ships[++countPressedGameField]);
                 isVerticalList.add(isVertical);
+
             }
+        }
+        else {
+            lo = new Logic();
+            lo.addAllShips(listTypeShip,listPoints);
         }
     }
 
