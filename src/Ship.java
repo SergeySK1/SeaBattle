@@ -9,7 +9,7 @@ public class Ship {
     private int[] ship;
 
     public Ship() {
-        ship = new int[10];
+        ship = new int[11];
 
 
     }
