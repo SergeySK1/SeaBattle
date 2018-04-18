@@ -1,10 +1,10 @@
 
 public class Ship {
 
-    static final int ONE_DECK_SHIP = 1;
-    static final int TWO_DECK_SHIP = 2;
-    static final int THREE_DECK_SHIP = 3;
-    static final int FOUR_DECK_SHIP = 4;
+   private static final int ONE_DECK_SHIP = 1;
+   private static final int TWO_DECK_SHIP = 2;
+   private static final int THREE_DECK_SHIP = 3;
+   private static final int FOUR_DECK_SHIP = 4;
 
     private int[] ship;
 
