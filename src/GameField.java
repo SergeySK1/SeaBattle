@@ -70,11 +70,15 @@ public class GameField extends JPanel implements ActionListener, MouseMotionList
             if (e.getButton() == MouseEvent.BUTTON1) {
                 positionPoint.x = e.getX();
                 positionPoint.y = e.getY();
+                if (lo.isAccessSetShip(ships[countPressedGameField],positionPoint,isVertical)){
+                    lo.addAllShips(ships[countPressedGameField],positionPoint,isVertical);
+                }
+                else{
+                    System.out.println("Судя нельзя!!!");
+                }
                 listPoints.add(new Point(positionPoint));
                 listTypeShip.add(ships[++countPressedGameField]);
                 isVerticalList.add(isVertical);
-                lo.addAllShips(listTypeShip,listPoints,isVerticalList);
-
             }
         }
     }

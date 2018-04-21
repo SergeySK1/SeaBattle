@@ -1,7 +1,5 @@
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-
+import java.util.function.ToDoubleBiFunction;
 
 public class Logic {
 
@@ -10,40 +8,64 @@ public class Logic {
     private char[][] saveShip;
 
 
-    public Logic(){
-        saveShip = new char[300][300];
+    public Logic() {
+        saveShip = new char[10][10];
     }
 
-    public void addAllShips (ArrayList<Integer> listShips, ArrayList<Point> listPoint, ArrayList<Boolean> isPosition){
-        int minX =0;
-        int minY =0;
-        int typeShip = -1;
-
-        for (int i = 0; i < listPoint.size(); i++) {
-            minX = (listPoint.get(i).x / ONESTEP) * ONESTEP;
-            minY = (listPoint.get(i).y / ONESTEP) * ONESTEP;
-            typeShip = listShips.get(i);
-            if (!isPosition.get(i)) {
-                switch (listShips.get(i)) {
+    public void addAllShips(int ships, Point positionPoint, boolean isPosition) {
+        for (int i = 0; i < ships; i++) {
+            if (isPosition) {
+                switch (ships) {
                     case 4:
-                        for (int j = minX; j < minX + ONESTEP; j++) {
-                            for (int k = minY; k < (minY +ONESTEP) * typeShip; k++) {
-                                saveShip[j][k] = 52;
-                            }
-                        }
+                        saveShip[positionPoint.x / ONESTEP][(positionPoint.y / ONESTEP) + i] = 52;
                         break;
+                    case 3:
+                        saveShip[positionPoint.x / ONESTEP][(positionPoint.y / ONESTEP) + i] = 51;
+                        break;
+                    case 2:
+                        saveShip[positionPoint.x / ONESTEP][(positionPoint.y / ONESTEP) + i] = 50;
+                        break;
+                    case 1:
+                        saveShip[positionPoint.x / ONESTEP][(positionPoint.y / ONESTEP) + i] = 49;
+                        break;
+                }
+            } else {
+                switch (ships) {
+                    case 4:
+                        saveShip[(positionPoint.x / ONESTEP) + i][positionPoint.y / ONESTEP] = 52;
+                        break;
+                    case 3:
+                        saveShip[(positionPoint.x / ONESTEP) + i][positionPoint.y / ONESTEP] = 51;
+                        break;
+                    case 2:
+                        saveShip[(positionPoint.x / ONESTEP) + i][positionPoint.y / ONESTEP] = 50;
+                        break;
+                    case 1:
+                        saveShip[(positionPoint.x / ONESTEP) + i][positionPoint.y / ONESTEP] = 49;
+                        break;
+
                 }
             }
         }
-        for (int i = 0; i < saveShip.length; i++) {
-            for (int j = 0; j < saveShip.length; j++) {
-                System.out.print(saveShip[i][j]);
-            }
-            System.out.println();
-        }
-
-
-
-        }
     }
 
+    // TODO Переодически выходит за предел массива, разобраться, допилить.
+    public boolean isAccessSetShip(int ships, Point positionPoint, boolean isPosition) {
+        if (positionPoint.x != 0 && positionPoint.y != 0) {
+            if (isPosition) {
+                for (int i = (positionPoint.x / ONESTEP) - 1; i < ((positionPoint.x / ONESTEP) - 1) + ships + 2; i++) {
+                    for (int j = (positionPoint.y / ONESTEP) - 1; j < ((positionPoint.y / ONESTEP) - 1) + ships + 2; j++) {
+                        if (saveShip[i][j] != 0) return false;
+                    }
+                }
+            } else {
+                for (int i = (positionPoint.y / ONESTEP) - 1; i < ((positionPoint.x / ONESTEP) - 1) + ships + 2; i++) {
+                    for (int j = (positionPoint.x / ONESTEP) - 1; j < ((positionPoint.y / ONESTEP) - 1) + ships + 2; j++) {
+                        if (saveShip[i][j] != 0) return false;
+                    }
+                }
+            }
+        }
+        return true;
+    }
+}

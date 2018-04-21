@@ -47,6 +47,7 @@ public class DrawField  {
                 if (!isPositionList.get(i)) {
                     g.fillRect((listPoints.get(i).x / ONESTEP) * ONESTEP, (listPoints.get(i).y / ONESTEP) * ONESTEP,
                             ONESTEP * listTypeShip.get(i), ONESTEP);
+
                 }
                 else {
                     g.fillRect((listPoints.get(i).x / ONESTEP) * ONESTEP, (listPoints.get(i).y / ONESTEP) * ONESTEP,
