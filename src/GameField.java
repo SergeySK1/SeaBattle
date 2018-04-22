@@ -25,6 +25,7 @@ public class GameField extends JPanel implements ActionListener, MouseMotionList
     private  DrawField drawField;
     private Timer timerRepaint = new Timer(50,this);
     Logic lo = new Logic();
+    private Color stopColor;
 
     public GameField(){
         addMouseListener(this);
@@ -36,6 +37,7 @@ public class GameField extends JPanel implements ActionListener, MouseMotionList
         listPoints = new ArrayList<>();
         positionPoint = new Point();
         isVerticalList = new ArrayList<>();
+        stopColor = Color.BLACK;
     }
 
     public void paintComponent(Graphics g){
@@ -43,7 +45,7 @@ public class GameField extends JPanel implements ActionListener, MouseMotionList
         if (drawField != null){
             drawField.drawGridFiled(g);
             drawField.setShipToField(g,listPoints,isVerticalList,listTypeShip);
-            drawField.movedShipToCoursor(g,countPressedGameField,isVertical,listTypeShip,ships, positionPoint);
+            drawField.movedShipToCoursor(g,countPressedGameField,isVertical,listTypeShip,ships, positionPoint, stopColor);
         }
         }
 
@@ -71,14 +73,16 @@ public class GameField extends JPanel implements ActionListener, MouseMotionList
                 positionPoint.x = e.getX();
                 positionPoint.y = e.getY();
                 if (lo.isAccessSetShip(ships[countPressedGameField],positionPoint,isVertical)){
-                    lo.addAllShips(ships[countPressedGameField],positionPoint,isVertical);
-                }
-                else{
-                    System.out.println("Судя нельзя!!!");
-                }
+                lo.addAllShips(ships[countPressedGameField],positionPoint,isVertical);
                 listPoints.add(new Point(positionPoint));
                 listTypeShip.add(ships[++countPressedGameField]);
                 isVerticalList.add(isVertical);
+                }
+
+                else{
+                	
+                    System.out.println("Судя нельзя!!!");
+                }
             }
         }
     }
@@ -86,11 +90,15 @@ public class GameField extends JPanel implements ActionListener, MouseMotionList
     @Override
     public void mousePressed(MouseEvent e) {
         if (e.getButton() == MouseEvent.BUTTON3) isVertical = !isVertical;
+        if (!lo.isAccessSetShip(ships[countPressedGameField],positionPoint,isVertical)){
+        	stopColor = Color.RED;
+        }
+        
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-
+    		stopColor = Color.BLACK;
     }
 
     @Override

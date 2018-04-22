@@ -26,17 +26,21 @@ public class DrawField  {
         }
     }
 
-    public void movedShipToCoursor (Graphics g, int countPress, boolean isPosition, ArrayList<Integer> listTypeShip, int[] ships, Point coordPoint){
-        g.setColor(Color.BLACK);
+    public void movedShipToCoursor (Graphics g, int countPress, boolean isPosition, ArrayList<Integer> listTypeShip, int[] ships, Point coordPoint, Color color){
+        g.setColor(color);
         if (countPress <= ships.length) {
             if (!isPosition) {
+            	if ((coordPoint.x/ONESTEP) * ONESTEP + (ONESTEP * listTypeShip.get(countPress)) <= WIDTH){
                     g.fillRect((coordPoint.x / ONESTEP) * ONESTEP, (coordPoint.y / ONESTEP) * ONESTEP,
                             ONESTEP * listTypeShip.get(countPress), ONESTEP);
+            	}
             }
             else{
+            	if ((coordPoint.y/ONESTEP) * ONESTEP + (ONESTEP * listTypeShip.get(countPress)) <= HEIGHT){
                     g.fillRect((coordPoint.x / ONESTEP) * ONESTEP, (coordPoint.y / ONESTEP) * ONESTEP,
                             ONESTEP, ONESTEP * listTypeShip.get(countPress));
-            }
+            	}
+            	}
         }
     }
 
