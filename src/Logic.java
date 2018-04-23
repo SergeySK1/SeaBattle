@@ -1,5 +1,4 @@
 import java.awt.*;
-import java.util.function.ToDoubleBiFunction;
 
 public class Logic {
 
@@ -9,7 +8,7 @@ public class Logic {
     private int stepStartPositionX = 0;
     private int stepStartPositionY = 0;
     private int stepLastPosition = 0;
-    private int stepScanningShip =0; 
+    private int stepScanningShip =0;
 
     public Logic() {
         saveShip = new char[10][10];
@@ -52,58 +51,17 @@ public class Logic {
         }
     }
 
- 
+
     public boolean isAccessSetShip(int ships, Point positionPoint, boolean isPosition) {
-        if (positionPoint.x/ONESTEP == 0 && positionPoint.y/ONESTEP == 0) {
-        	stepStartPositionX = 0;
-        	stepStartPositionY =0;
-        	stepLastPosition = 2;
-        }
-        else if (positionPoint.x/ONESTEP == 0){
-        	stepStartPositionX = 0;
-        	stepStartPositionY =1;
-        	stepLastPosition = 2;
-        }
-        else if (positionPoint.y/ONESTEP == 0){
-        	stepStartPositionX = 1;
-        	stepStartPositionY =0;
-        	stepLastPosition = 2;
-        }
-        else if (positionPoint.x/ONESTEP == 9){
-        	stepStartPositionX = 1;
-        	stepStartPositionY =1;
-        	stepLastPosition = 2;
-        }
-        else if (positionPoint.y/ONESTEP == 9){
-        	stepStartPositionX = 1;
-        	stepStartPositionY =1;
-        	stepLastPosition = 2;
-        }
-        else{
-        	stepStartPositionX = 1;
-        	stepStartPositionY =1;
-        	stepLastPosition = 3;
-      
-        }
-        if (positionPoint.x/ONESTEP + ships == saveShip.length && !isPosition){
-        	stepScanningShip = 1;
-        }
-        else if(positionPoint.y/ONESTEP + ships == saveShip.length && isPosition){
-        	stepScanningShip = 1;
-        }
-        
-        else {
-        	stepScanningShip = 2;
-        }
-        
-            if (isPosition) {
+        scanningPosition(ships,positionPoint,isPosition);
+            if (isPosition && positionPoint.y/ONESTEP + ships <= saveShip.length) {
+                System.out.println("sdfsdg");
                 for (int i = (positionPoint.x / ONESTEP) - stepStartPositionX; i < ((positionPoint.x / ONESTEP) - stepStartPositionX) + stepLastPosition; i++) {
-                    for (int j = (positionPoint.y / ONESTEP) - stepStartPositionY; j < ((positionPoint.y / ONESTEP) - stepStartPositionY) + ships + stepScanningShip; j++) {    
-                    	System.out.println("i = "+ i + " j = "+ j + " "+saveShip[i][j]);
+                    for (int j = (positionPoint.y / ONESTEP) - stepStartPositionY; j < ((positionPoint.y / ONESTEP) - stepStartPositionY) + ships + stepScanningShip; j++) {
                     	if (saveShip[i][j] != 0) return false;
                     }
                 }
-            } else {
+            } else if (!isPosition && positionPoint.x/ONESTEP + ships <= saveShip.length){
                 for (int i = (positionPoint.x/ ONESTEP) - stepStartPositionX; i < ((positionPoint.x / ONESTEP) - stepStartPositionX) + ships + stepScanningShip; i++) {
                     for (int j = (positionPoint.y/ ONESTEP) - stepStartPositionY; j < ((positionPoint.y / ONESTEP) - stepStartPositionY) + stepLastPosition; j++) {
                     	if (saveShip[i][j] != 0) return false;
@@ -111,5 +69,90 @@ public class Logic {
                 }
             }
         return true;
+    }
+
+    private void scanningPosition (int ships, Point positionPoint, boolean isPosition){
+        if (positionPoint.x/ONESTEP == 0 && positionPoint.y/ONESTEP == 0) {
+            stepStartPositionX = 0;
+            stepStartPositionY =0;
+            stepLastPosition = 2;
+            stepScanningShip = 1;
+        }
+        else if (positionPoint.x/ONESTEP == 0 && positionPoint.y/ONESTEP != 9 && isPosition){
+            stepStartPositionX = 0;
+            stepStartPositionY =1;
+            stepLastPosition = 2;
+            stepScanningShip = 2;
+        }
+        else if (positionPoint.y/ONESTEP == 0 && positionPoint.x/ONESTEP != 9 && isPosition){
+            stepStartPositionX = 1;
+            stepStartPositionY =0;
+            stepLastPosition = 3;
+            stepScanningShip = 1;
+        }
+        else if (positionPoint.x/ONESTEP == 0 && positionPoint.y/ONESTEP != 9 && !isPosition){
+            stepStartPositionX = 0;
+            stepStartPositionY =1;
+            stepLastPosition = 3;
+            stepScanningShip = 1;
+        }
+        else if (positionPoint.y/ONESTEP == 0 && positionPoint.y/ONESTEP != 9 && !isPosition){
+            stepStartPositionX = 1;
+            stepStartPositionY =0;
+            stepLastPosition = 2;
+            stepScanningShip = 2;
+        }
+        else if (positionPoint.x/ONESTEP == 9 && positionPoint.y/ONESTEP == 9){
+            stepStartPositionX = 1;
+            stepStartPositionY =1;
+            stepLastPosition = 2;
+            stepScanningShip = 1;
+        }
+        else if (positionPoint.y/ONESTEP == 9 && positionPoint.x/ONESTEP != 0 && isPosition){
+            stepStartPositionX = 1;
+            stepStartPositionY =1;
+            stepLastPosition = 3;
+            stepScanningShip = 1;
+        }
+        else if (positionPoint.x/ONESTEP == 9 && positionPoint.y/ONESTEP != 0 && isPosition){
+            stepStartPositionX = 1;
+            stepStartPositionY =1;
+            stepLastPosition = 2;
+            stepScanningShip = 2;
+        }
+        else if (positionPoint.y/ONESTEP == 9 && positionPoint.x/ONESTEP != 0 && !isPosition){
+            stepStartPositionX = 1;
+            stepStartPositionY =1;
+            stepLastPosition = 2;
+            stepScanningShip = 2;
+        }
+        else if (positionPoint.x/ONESTEP == 9 && positionPoint.y/ONESTEP != 0 && !isPosition){
+            stepStartPositionX = 1;
+            stepStartPositionY =1;
+            stepLastPosition = 3;
+            stepScanningShip = 1;
+        }
+        else if (positionPoint.x/ONESTEP == 9){
+            stepStartPositionX = 1;
+            stepStartPositionY =0;
+            stepLastPosition = 2;
+        }
+        else if (positionPoint.y/ONESTEP == 9){
+            stepStartPositionX = 0;
+            stepStartPositionY =1;
+            stepLastPosition = 2;
+        }
+        else{
+            stepStartPositionX = 1;
+            stepStartPositionY =1;
+            stepLastPosition = 3;
+            stepScanningShip = 2;
+        }
+        if (positionPoint.x/ONESTEP + ships == saveShip.length && !isPosition){
+            stepScanningShip = 1;
+        }
+        else if(positionPoint.y/ONESTEP + ships == saveShip.length && isPosition){
+            stepScanningShip = 1;
+        }
     }
 }

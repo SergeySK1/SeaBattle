@@ -4,10 +4,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class BuildGUI {
-    JFrame startFrame;
-    JPanel basePanel;
-    JButton startButton;
-    JButton exitButton;
+   private JFrame startFrame;
+    private JPanel basePanel;
+    private JButton startButton;
+    private JButton exitButton;
 
     public BuildGUI(){
         startFrame = new JFrame("SeaBattle");
@@ -22,9 +22,6 @@ public class BuildGUI {
         startButton = new JButton("START");
         exitButton = new JButton("EXIT");
         startFrame.add(startButton, BorderLayout.AFTER_LAST_LINE);
-
-
-
         startButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
