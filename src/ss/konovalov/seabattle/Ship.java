@@ -1,3 +1,4 @@
+package ss.konovalov.seabattle;
 
 public class Ship {
 

@@ -1,3 +1,5 @@
+package ss.konovalov.seabattle;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -29,12 +31,12 @@ public class BuildGUI {
                 basePanel = new JPanel();
                 basePanel.setBackground(Color.BLACK);
                 basePanel.setLayout(new FlowLayout());
-                GameField playerField = new GameField();
-                GameField playerField1 = new GameField();
+                PlayerField playerField = new PlayerField();
+                PCField pcField = new PCField();
                 startFrame.add(basePanel);
                 basePanel.add(playerField);
                 basePanel.add(StatusPanel.createStatusPanel());
-                basePanel.add(playerField1);
+                basePanel.add(pcField);
                 basePanel.add(exitButton);
                 exitButton.addActionListener((n) -> System.exit(0));
 

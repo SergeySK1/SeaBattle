@@ -1,3 +1,5 @@
+package ss.konovalov.seabattle;
+
 import javax.swing.*;
 import java.awt.*;
 

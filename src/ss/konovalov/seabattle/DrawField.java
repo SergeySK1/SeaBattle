@@ -1,4 +1,4 @@
-
+package ss.konovalov.seabattle;
 
 import java.awt.*;
 import java.util.ArrayList;

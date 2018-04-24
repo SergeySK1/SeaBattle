@@ -1,3 +1,7 @@
+package ss.konovalov.seabattle;
+
+import ss.konovalov.seabattle.BuildGUI;
+
 import javax.swing.*;
 
 public class Start {

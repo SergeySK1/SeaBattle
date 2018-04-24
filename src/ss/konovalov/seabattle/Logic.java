@@ -1,3 +1,5 @@
+package ss.konovalov.seabattle;
+
 import java.awt.*;
 
 public class Logic {
@@ -55,20 +57,21 @@ public class Logic {
     public boolean isAccessSetShip(int ships, Point positionPoint, boolean isPosition) {
         scanningPosition(ships,positionPoint,isPosition);
             if (isPosition && positionPoint.y/ONESTEP + ships <= saveShip.length) {
-                System.out.println("sdfsdg");
                 for (int i = (positionPoint.x / ONESTEP) - stepStartPositionX; i < ((positionPoint.x / ONESTEP) - stepStartPositionX) + stepLastPosition; i++) {
                     for (int j = (positionPoint.y / ONESTEP) - stepStartPositionY; j < ((positionPoint.y / ONESTEP) - stepStartPositionY) + ships + stepScanningShip; j++) {
                     	if (saveShip[i][j] != 0) return false;
                     }
                 }
+                return true;
             } else if (!isPosition && positionPoint.x/ONESTEP + ships <= saveShip.length){
                 for (int i = (positionPoint.x/ ONESTEP) - stepStartPositionX; i < ((positionPoint.x / ONESTEP) - stepStartPositionX) + ships + stepScanningShip; i++) {
                     for (int j = (positionPoint.y/ ONESTEP) - stepStartPositionY; j < ((positionPoint.y / ONESTEP) - stepStartPositionY) + stepLastPosition; j++) {
                     	if (saveShip[i][j] != 0) return false;
                     }
                 }
+                return true;
             }
-        return true;
+        return false;
     }
 
     private void scanningPosition (int ships, Point positionPoint, boolean isPosition){

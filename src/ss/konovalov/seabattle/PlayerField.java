@@ -1,3 +1,9 @@
+package ss.konovalov.seabattle;
+
+import ss.konovalov.seabattle.DrawField;
+import ss.konovalov.seabattle.GameField;
+import ss.konovalov.seabattle.Logic;
+
 import javax.swing.*;
 import javax.swing.event.MouseInputListener;
 import java.awt.*;
@@ -8,8 +14,7 @@ import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 
 
-
-public class GameField extends JPanel implements ActionListener, MouseMotionListener, MouseInputListener{
+public class PlayerField extends GameField implements ActionListener, MouseMotionListener, MouseInputListener{
 
     private static final int WIDTH = 301;
     private static final int HEIGHT = 301;
@@ -22,12 +27,12 @@ public class GameField extends JPanel implements ActionListener, MouseMotionList
     private Point positionPoint;
     private ArrayList<Boolean> isVerticalList;
     private boolean isVertical;
-    private  DrawField drawField;
+    private DrawField drawField;
     private Timer timerRepaint = new Timer(50,this);
-    Logic lo = new Logic();
+    private Logic playerLogic = new Logic();
     private Color stopColor;
 
-    public GameField(){
+    public PlayerField(){
         addMouseListener(this);
         addMouseMotionListener(this);
         setPreferredSize(new Dimension(WIDTH,HEIGHT));
@@ -67,21 +72,16 @@ public class GameField extends JPanel implements ActionListener, MouseMotionList
 
     @Override
     public void mouseClicked(MouseEvent e) {
-
         if (countPressedGameField < 10) {
             if (e.getButton() == MouseEvent.BUTTON1) {
                 positionPoint.x = e.getX();
                 positionPoint.y = e.getY();
-                System.out.println(lo.isAccessSetShip(ships[countPressedGameField], positionPoint, isVertical));
-                if (lo.isAccessSetShip(ships[countPressedGameField], positionPoint, isVertical)) {
-                    lo.addAllShips(ships[countPressedGameField], positionPoint, isVertical);
+                if (playerLogic.isAccessSetShip(ships[countPressedGameField], positionPoint, isVertical)) {
+                    playerLogic.addAllShips(ships[countPressedGameField], positionPoint, isVertical);
                     listPoints.add(new Point(positionPoint));
                     listTypeShip.add(ships[++countPressedGameField]);
                     isVerticalList.add(isVertical);
                 }
-            }
-            else{
-                System.out.println("Сюда нельзя!");
             }
         }
     }
@@ -89,7 +89,7 @@ public class GameField extends JPanel implements ActionListener, MouseMotionList
     @Override
     public void mousePressed(MouseEvent e) {
         if (e.getButton() == MouseEvent.BUTTON3) isVertical = !isVertical;
-        if (!lo.isAccessSetShip(ships[countPressedGameField],positionPoint,isVertical)){
+        if (!playerLogic.isAccessSetShip(ships[countPressedGameField],positionPoint,isVertical)){
         	stopColor = Color.RED;
         }
     }
