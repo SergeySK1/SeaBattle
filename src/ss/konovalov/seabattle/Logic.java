@@ -10,7 +10,7 @@ public class Logic {
     private int stepStartPositionX = 0;
     private int stepStartPositionY = 0;
     private int stepLastPosition = 0;
-    private int stepScanningShip =0;
+    private int stepScanningShip = 0;
 
     public Logic() {
         saveShip = new char[10][10];
@@ -47,7 +47,6 @@ public class Logic {
                     case 1:
                         saveShip[(positionPoint.x / ONESTEP) + i][positionPoint.y / ONESTEP] = 49;
                         break;
-
                 }
             }
         }
@@ -157,5 +156,86 @@ public class Logic {
         else if(positionPoint.y/ONESTEP + ships == saveShip.length && isPosition){
             stepScanningShip = 1;
         }
+    }
+
+    public char [][] getSaveShip(){
+        return saveShip;
+    }
+
+    public int shot (Point shotPoint){
+        if (saveShip[shotPoint.x/ONESTEP][shotPoint.y/ONESTEP] != 0){
+            saveShip[shotPoint.x/ONESTEP][shotPoint.y/ONESTEP] = 0;
+            return killOrWounded(shotPoint.x/ONESTEP, shotPoint.y/ONESTEP) ? 1 : -1;
+        }
+
+            return 0;
+    }
+
+    public boolean killOrWounded(int x, int y){
+        if (x == 0 && y == 0) {
+            if (saveShip[x+1][y]==0
+                    && saveShip[x][y+1]==0){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+        else if (x == 0 && y != 9){
+            if (saveShip[x][y+1]==0
+                    && saveShip[x][y-1]==0
+                    && saveShip[x+1][y]==0){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+        else if (x != 9 && y ==0){
+            if (saveShip[x-1][y]==0
+                    && saveShip[x+1][y]==0
+                    && saveShip[x][y+1]==0){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+     else if (x == 9 && y == 9){
+            if (saveShip[x-1][y] == 0
+                    && saveShip[x][y-1]==0){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+        else if (x != 9 && y == 9){
+         if (saveShip[x+1][y]==0
+                 && saveShip[x-1][y]==0
+                 && saveShip[x][y-1]==0){
+             return true;
+         }
+         else{
+             return false;
+         }
+        }
+        else if (x == 9 && y != 9){
+            if (saveShip[x][y-1]==0
+                    && saveShip[x][y+1]==0
+                    && saveShip[x-1][y]==0){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+        else{
+            if (saveShip[x][y+1]==0
+                    && saveShip[x][y-1]==0
+                    && saveShip[x-1][y]==0
+                    && saveShip[x+1][y]==0) return true;
+        }
+        return false;
     }
 }

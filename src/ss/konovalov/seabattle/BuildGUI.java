@@ -31,14 +31,15 @@ public class BuildGUI {
                 basePanel = new JPanel();
                 basePanel.setBackground(Color.BLACK);
                 basePanel.setLayout(new FlowLayout());
-                PlayerField playerField = new PlayerField();
-                PCField pcField = new PCField();
+                PlayerField playerField = PlayerField.createPlayerField();
+                PCField pcField = PCField.createPCField();
                 startFrame.add(basePanel);
                 basePanel.add(playerField);
                 basePanel.add(StatusPanel.createStatusPanel());
                 basePanel.add(pcField);
                 basePanel.add(exitButton);
                 exitButton.addActionListener((n) -> System.exit(0));
+
 
             }
         });

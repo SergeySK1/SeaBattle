@@ -1,8 +1,6 @@
 package ss.konovalov.seabattle;
 
-import ss.konovalov.seabattle.DrawField;
-import ss.konovalov.seabattle.GameField;
-import ss.konovalov.seabattle.Logic;
+
 
 import javax.swing.*;
 import javax.swing.event.MouseInputListener;
@@ -10,11 +8,10 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionListener;
 import java.util.ArrayList;
 
 
-public class PlayerField extends GameField implements ActionListener, MouseMotionListener, MouseInputListener{
+public class PlayerField extends GameField implements ActionListener, MouseInputListener{
 
     private static final int WIDTH = 301;
     private static final int HEIGHT = 301;
@@ -31,8 +28,9 @@ public class PlayerField extends GameField implements ActionListener, MouseMotio
     private Timer timerRepaint = new Timer(50,this);
     private Logic playerLogic = new Logic();
     private Color stopColor;
+    private static PlayerField playerField;
 
-    public PlayerField(){
+    private PlayerField(){
         addMouseListener(this);
         addMouseMotionListener(this);
         setPreferredSize(new Dimension(WIDTH,HEIGHT));
@@ -43,6 +41,15 @@ public class PlayerField extends GameField implements ActionListener, MouseMotio
         positionPoint = new Point();
         isVerticalList = new ArrayList<>();
         stopColor = Color.BLACK;
+    }
+
+    public static PlayerField createPlayerField(){
+        if (playerField == null) playerField = new PlayerField();
+        return playerField;
+    }
+
+    public char[][] getPlayerShip(){
+        return playerLogic.getSaveShip();
     }
 
     public void paintComponent(Graphics g){
@@ -83,6 +90,9 @@ public class PlayerField extends GameField implements ActionListener, MouseMotio
                     isVerticalList.add(isVertical);
                 }
             }
+        }
+        if (countPressedGameField == 10) {
+            isPlayerReady = true;
         }
     }
 
