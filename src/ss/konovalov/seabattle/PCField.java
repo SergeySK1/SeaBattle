@@ -20,10 +20,10 @@ public class PCField extends GameField implements ActionListener, MouseInputList
     private Point pcPositionPoint;
     private boolean isPCPosition;
     private Logic pcLogic;
-    private ArrayList<Boolean>isPositionList;
-    private ArrayList<Point>pcListPoint;
-    private ArrayList<Integer>listTypeShips;
+    private ArrayList<Point> shotPoint;
+    private ArrayList<Integer> codeShot;
     private static PCField pcField;
+    private int countShot;
     private Color statusShip;
     private char[][] saveToFieldShips;
 
@@ -37,9 +37,8 @@ public class PCField extends GameField implements ActionListener, MouseInputList
         addMouseListener(this);
         repaintTimer = new Timer(50,this);
         repaintTimer.start();
-        isPositionList = new ArrayList<>();
-        pcListPoint = new ArrayList<>();
-        listTypeShips = new ArrayList<>();
+        shotPoint = new ArrayList<>();
+        codeShot = new ArrayList<>();
         addPCAllShips();
     }
 
@@ -87,8 +86,10 @@ public class PCField extends GameField implements ActionListener, MouseInputList
         super.paintComponent(g);
         if (drawField != null) {
             drawField.drawGridFiled(g);
-            //Временная хрень, для тестирования визульного вывода корабля на поле PC.
-            drawField.setShipToField(g,pcListPoint,isPositionList,listTypeShips);
+            /*//Временная хрень, для тестирования визульного вывода корабля на поле PC.
+            drawField.setShipToField(g,pcListPoint,isPositionList,listTypeShips);*/
+
+            drawField.statusBattleField(g,codeShot,shotPoint);
         }
     }
 
@@ -101,17 +102,8 @@ public class PCField extends GameField implements ActionListener, MouseInputList
     public void mouseClicked(MouseEvent e) {
         if (isPlayerReady) {
             if (e.getButton() == MouseEvent.BUTTON1) {
-
-                switch (pcLogic.shot(e.getPoint())){
-                    case 0:
-                        System.out.println("Мимо");
-                        break;
-                    case 1:
-                        System.out.println("убил");
-                        break;
-                    case -1:
-                        System.out.println("ранил");
-                }
+                shotPoint.add(e.getPoint());
+                codeShot.add(pcLogic.shot(shotPoint.get(countShot++)));
             }
 
         }

@@ -164,7 +164,6 @@ public class Logic {
 
     public int shot (Point shotPoint){
         if (saveShip[shotPoint.x/ONESTEP][shotPoint.y/ONESTEP] != 0){
-            saveShip[shotPoint.x/ONESTEP][shotPoint.y/ONESTEP] = 0;
             return killOrWounded(shotPoint.x/ONESTEP, shotPoint.y/ONESTEP) ? 1 : -1;
         }
 
